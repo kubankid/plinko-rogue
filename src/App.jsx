@@ -18,8 +18,15 @@ import Room from './components/Room';
 
 import { createPortal } from 'react-dom';
 import { useLayout } from './components/LayoutContext';
+import { useControls } from 'leva';
 
 function Game() {
+  // Debug Button Position Controls
+  const { debugX, debugY } = useControls('Debug Button Pos', {
+    debugX: { value: 10, min: 0, max: 2000, step: 1 },
+    debugY: { value: 10, min: 0, max: 1000, step: 1 }
+  });
+
   // Game State
   const [deck, setDeck] = useState(new Deck());
   const [playerHands, setPlayerHands] = useState([]); // Array of { cards: [], bet: number, status: 'playing'|'stood'|'busted'|'blackjack' }
@@ -672,7 +679,7 @@ function Game() {
                       key={index}
                       style={{
                         opacity: index === currentHandIndex ? 1 : 0.5,
-                        border: index === currentHandIndex ? '2px solid #ffff00' : '2px solid transparent',
+                        border: 'none',
                         padding: '10px',
                         borderRadius: '10px',
                         transition: 'all 0.3s ease',
@@ -751,26 +758,7 @@ function Game() {
         rightNode
       )}
 
-      {/* Debug View */}
-      <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 1000 }}>
-        <button onClick={() => setShowDebug(!showDebug)} style={{ padding: '5px 10px', background: '#333', color: '#fff', border: '1px solid #555' }}>
-          {showDebug ? 'Hide Debug' : 'Debug Cards'}
-        </button>
-      </div>
-      {showDebug && (
-        <div style={{ position: 'absolute', top: 50, left: 10, right: 10, bottom: 10, background: 'rgba(0,0,0,0.9)', overflow: 'auto', zIndex: 1000, padding: 20, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: 10 }}>
-          {['Hearts', 'Clubs', 'Diamonds', 'Spades'].map(suit =>
-            ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'].map(rank => (
-              <div key={`${rank}-${suit}`} style={{ textAlign: 'center' }}>
-                <div style={{ width: 80, height: 120, margin: '0 auto' }}>
-                  <Card card={{ suit, rank }} />
-                </div>
-                <div style={{ color: '#fff', fontSize: 10, marginTop: 5 }}>{rank} {suit}</div>
-              </div>
-            ))
-          )}
-        </div>
-      )}
+
     </>
   );
 

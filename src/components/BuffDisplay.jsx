@@ -67,7 +67,7 @@ const BuffDisplay = ({ inventory, onSell }) => {
                             {getIcon(selectedBuff.id)}
                         </div>
                         <h3 style={{ color: '#ff00ff', marginBottom: '10px' }}>{selectedBuff.name}</h3>
-                        <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '0.9rem' }}>
+                        <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '1.2rem' }}>
                             {selectedBuff.description}
                         </p>
                         <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>

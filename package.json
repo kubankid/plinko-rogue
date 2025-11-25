@@ -30,6 +30,8 @@
     }
   },
   "dependencies": {
+    "@react-spring/three": "^10.0.3",
+    "@react-spring/web": "^10.0.3",
     "@react-three/drei": "^9.121.4",
     "@react-three/fiber": "^8.17.14",
     "leva": "^0.10.1",

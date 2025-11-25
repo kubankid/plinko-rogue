@@ -1,45 +1,66 @@
-# BlackJack Pit - Update Walkthrough
+# Version 2.0 Changelog: Immersive 3D Glass Update
 
-## Changes Implemented
+## Major Features
 
-### 1. Rebet Feature Fix
-- **Issue**: The "Change Bet" controls were being obscured by the main game controls, making it impossible to adjust bets when low on chips.
-- **Fix**: Moved the `BettingControls` component inside the main `Controls` bar.
-- **Result**: Betting controls are now always visible next to the "Deal New Hand" button.
+### 1. Immersive 3D Environment
+- **3D Room**: Implemented a full 3D scene using `@react-three/fiber` and `@react-three/drei`.
+- **Camera**: Added `PerspectiveCamera` and `OrbitControls` for a dynamic view.
+- **Interactive Screens**: Created `ExpandableScreen` components for the **Shop** and **Status** panels that animate open/closed in 3D space.
 
-### 2. Layout Refinements
-- **Issue**: The game table was cut off, and the status panel looked squished.
-- **Fix**:
-  - Increased the height of the center screen (Game Board) to `700px`.
-  - Increased the width of the right screen (Status Panel) to `500px`.
-  - Optimized CSS for `.game-board` and `.status-panel` to be more flexible.
-  - Moved the side screens (Shop and Status) further out in the 3D room (X-axis distance increased from 12 to 14).
-  - **Update**: Moved the Shop (Left Screen) to X=-12 to find the sweet spot between "too far" and "too close".
+### 2. Dynamic Video Background
+- **Animated Cockpit**: Integrated `Animatedcockpit.mp4` as a panoramic video background using `useVideoTexture`.
+- **Debug Controls**: Added real-time controls (`bgX`, `bgY`, `bgZ`, `bgScale`) to adjust the background position and scale.
+- **Starfield**: Maintained the scrolling starfield effect for added depth.
 
-### 3. Camera Adjustments
-- **Issue**: The view was too close, the angle needed adjustment, and the scene was off-center.
-- **Fix**:
-  - Zoomed out the camera to a distance of `32`.
-  - Raised the camera height (Y-axis) to `2.5` to provide a better viewing angle.
-  - Shifted the camera and orbit target X-axis to `2` to center the scene.
+### 3. Global Glass UI (Glassmorphism)
+- **Translucent Design**: All UI panels (Game Board, Shop, Status, HUD) now feature a semi-transparent "glass" look.
+- **CSS Variables**: Defined `--glass-bg` (20% black), `--glass-border` (30% white), and `--glass-backdrop` (blur 5px) for consistent styling.
+- **Transparent Elements**:
+    - **Buttons**: 30% black with blur.
+    - **Cards**: 10% white glass look.
+    - **Table**: Fully transparent center container.
 
-### 4. Application Packaging
-- **Feature**: User requested a standalone app.
-- **Implementation**:
-  - Configured `electron-builder` in `package.json`.
-  - Updated `electron/main.js` to correctly load production assets.
-  - Updated `vite.config.js` to use relative paths (`base: './'`) for assets.
-  - Generated a macOS application bundle (`.app`) and disk image (`.dmg`).
+### 4. UI Scaling & Readability
+- **Super-Sized Text**: Significantly increased font sizes for Shop titles (`3em`), items (`2.5em`), and HUD stats (`2.5rem`).
+- **Scaled Screens**: Increased the 3D scale of the Center Screen to `1.2` and Side Screens to `0.4` for better visibility.
+- **Refined Layout**: Moved controls down to prevent overlapping with chips and removed borders from player hands.
 
-### 5. 8-bit Card Visuals
-- **Feature**: Replaced CSS-based cards with 8-bit image assets.
-- **Implementation**:
-  - Copied `tileXXX.png` images to `public/cards/`.
-  - Updated `Card.jsx` to render images based on suit and rank mapping.
-  - Updated `App.jsx` to use the 8-bit card back (`tile052.png`) for the dealer's hole card.
+### 5. Interaction Improvements
+- **Independent Windows**: Shop and Status windows can now be toggled independently.
+- **Zoom Disabled**: Removed zoom-on-click behavior for easier interaction with UI elements.
+- **Pressed State**: Added visual feedback for 3D buttons (Shop/Status) when active.
 
-## Verification
+## Technical Details
+- **Tech Stack**: React, Three.js, React Spring, Leva.
+- **Assets**: Added `Animatedcockpit.mp4` and `cockpit2.png`.
+- **Optimization**: Used `NearestFilter` for crisp pixel art rendering. Color** (Magenta for Shop, Green for Status) via `box-shadow`.
+    - **Interaction**: 
+        - **Independent Toggle**: Windows can be open simultaneously.
+        - **Active State**: Button remains visible, background turns to **Theme Color**, text turns **Black**.
+        - **Pressed Effect**: Button shifts down (`translate(2px, 2px)`) and shadow disappears when active.
+        - **Decoupled Animation**: Window animates from button position while button stays static.
+    - **Transition**: Window appears below the button.
+    - Clicking 'X' minimizes the window.
+- **Content Scaling**: Increased font sizes for better readability:
+    - **Shop**: Title (`2em`), Chips (`1.5em`), Items (`1.5em`), Desc (`1.2em`).
+    - **Status/HUD**: Labels (`0.8rem`), Values (`1.5rem`), Buff Icons (`50px`).
+- Increased Side Screen resolution (`1000x1500`) and scale (`0.3`) for maximum visibility.
+- Fixed background occlusion by setting `renderOrder={-1}` and `depthWrite={false}`.
+- Added 3-state interaction: `Closed` (Button) -> `Open` (Angled Side) -> `Focused` (Zoomed).
+- Fixed `Text` component naming conflict by aliasing as `DreiText`.
+- **Debug Controls**: 
+    - **Button Position**: `lbx`, `lby`, `lbz` (Left Button), `rbx`, `rby`, `rbz` (Right Button).
+    - **Window Position**: `shopWinX`, `statusWinX`, `winY`, `winZ`.
+    - **Background**: `bgX`, `bgY`, `bgZ`, `bgScale` (Adjust position and scale).
+    - **Fix**: Updated `CockpitBackground` to accept dynamic props.
+    - **Debug Card Button**: Removed (Verified & Integrated).
 
-- **Build Status**: The application was successfully built using `npm run dist`.
-- **Location**: The packaged app is located at `BlackJack Pit/release/mac-arm64/BlackJack Pit.app`.
-- **Functionality**: The app should now launch directly from the Dock with all layout, camera, and visual updates applied.
+## Verification Results
+
+### Automated Tests
+- N/A (Visual change)
+
+### Manual Verification
+- [ ] Launch the app and verify the background is visible.
+- [ ] Check if the stars from `StarField` are visible through any transparent parts of the cockpit image.
+- [ ] Ensure the UI screens are still clearly visible and accessible.

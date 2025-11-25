@@ -4,7 +4,7 @@ const Shop = ({ items, ownedItems, buyItem, chips, onClose, refreshCost, onRefre
     const [hoveredItem, setHoveredItem] = useState(null);
 
     return (
-        <div style={{
+        <div className="glass-panel" style={{
             padding: '20px',
             color: '#fff',
             height: '100%',
@@ -13,8 +13,8 @@ const Shop = ({ items, ownedItems, buyItem, chips, onClose, refreshCost, onRefre
             boxSizing: 'border-box',
             overflow: 'hidden'
         }}>
-            <h2 style={{ color: '#ff00ff', textAlign: 'center', textShadow: '0 0 10px #ff00ff', margin: '0 0 10px 0' }}>THE PIT SHOP</h2>
-            <div style={{ textAlign: 'center', marginBottom: '15px', fontSize: '1.2em' }}>CHIPS: {chips}</div>
+            <h2 style={{ color: '#ff00ff', textAlign: 'center', textShadow: '0 0 10px #ff00ff', margin: '0 0 10px 0', fontSize: '3em' }}>THE PIT SHOP</h2>
+            <div style={{ textAlign: 'center', marginBottom: '15px', fontSize: '2.5em' }}>CHIPS: {chips}</div>
 
             <div style={{
                 flex: 1,
@@ -41,23 +41,24 @@ const Shop = ({ items, ownedItems, buyItem, chips, onClose, refreshCost, onRefre
                             onMouseEnter={() => setHoveredItem(item)}
                             onMouseLeave={() => setHoveredItem(null)}
                         >
-                            <div style={{ fontSize: '2em', marginBottom: '10px' }}>{item.icon}</div>
-                            <h3 style={{ margin: '0 0 5px 0', color: '#ff00ff' }}>{item.name}</h3>
-                            <p style={{ fontSize: '0.8em', color: '#ccc' }}>{item.description}</p>
+                            <div style={{ fontSize: '3em', marginBottom: '10px' }}>{item.icon}</div>
+                            <h3 style={{ margin: '0 0 5px 0', color: '#ff00ff', fontSize: '2.5em' }}>{item.name}</h3>
+                            <p style={{ fontSize: '1.8em', color: '#ccc' }}>{item.description}</p>
 
                             <button
                                 onClick={() => buyItem(item)}
                                 disabled={chips < item.cost}
                                 style={{
                                     marginTop: '10px',
-                                    padding: '8px 16px',
+                                    padding: '12px 16px',
                                     background: chips >= item.cost ? '#ff00ff' : '#555',
                                     border: 'none',
                                     color: '#fff',
                                     cursor: chips >= item.cost ? 'pointer' : 'not-allowed',
                                     borderRadius: '4px',
                                     fontWeight: 'bold',
-                                    width: '100%'
+                                    width: '100%',
+                                    fontSize: '1.8em'
                                 }}
                             >
                                 BUY ${item.cost}
