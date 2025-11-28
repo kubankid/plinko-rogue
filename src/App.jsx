@@ -107,9 +107,9 @@ function Game() {
     // Apply Loaded Dice: Ensure player starts with > 18
     const hasLoadedDice = inventory.some(i => i.id === 'loaded_dice');
     if (hasLoadedDice) {
-      // Force first two cards to be high value (e.g., 10 and 9/10/A)
+      // Force first two cards to be high value (e.g., 10 and 7/8/9/10/A)
       newDeck.manipulateNextDraw(10);
-      newDeck.manipulateNextDraw(9);
+      newDeck.manipulateNextDraw(7);
     }
 
     // Apply Ace in the Hole: Ensure one card is an Ace
@@ -140,6 +140,45 @@ function Game() {
     // Check for immediate Blackjack
     if (isBlackjack(pHand)) {
       handleRoundEnd([{ cards: pHand, bet: currentBet, status: 'blackjack' }], dHand);
+    } else {
+      // Apply Deal Buffs
+      let bonusChips = 0;
+      let buffMessages = [];
+
+      // Pair Perfection
+      if (inventory.some(i => i.id === 'pair_perfection')) {
+        if (pHand[0].rank === pHand[1].rank) {
+          const bonus = Math.floor(currentBet * 1.0);
+          bonusChips += bonus;
+          buffMessages.push(`Pair Perfection! +${bonus}`);
+        }
+      }
+
+      // Suit Synergy
+      if (inventory.some(i => i.id === 'suit_synergy')) {
+        if (pHand[0].suit === pHand[1].suit) {
+          const bonus = Math.floor(currentBet * 0.5);
+          bonusChips += bonus;
+          buffMessages.push(`Suit Synergy! +${bonus}`);
+        }
+      }
+
+      // Poker Face
+      if (inventory.some(i => i.id === 'poker_face')) {
+        const pokerCards = [...pHand, dHand[0]];
+        const pokerResult = evaluatePokerHand(pokerCards);
+        if (pokerResult) {
+          const bonus = Math.floor(currentBet * pokerResult.multiplier);
+          bonusChips += bonus;
+          buffMessages.push(`${pokerResult.name}! +${bonus}`);
+        }
+      }
+
+      if (bonusChips > 0) {
+        setChips(prev => prev + bonusChips);
+        soundManager.playChip();
+        setMessage(prev => prev ? `${prev} | ${buffMessages.join(' | ')}` : buffMessages.join(' | '));
+      }
     }
   };
 
@@ -313,6 +352,14 @@ function Game() {
 
     // Deduct bet for new hand
     setChips(prev => prev - currentHand.bet);
+
+    // Split Master Buff
+    if (inventory.some(i => i.id === 'split_master')) {
+      const bonus = Math.floor(currentHand.bet * 1.5);
+      setChips(prev => prev + bonus);
+      setMessage(`Split Master! +${bonus} Chips`);
+    }
+
     soundManager.playChip();
     soundManager.playDeal();
 
@@ -393,6 +440,19 @@ function Game() {
         payout = calculatePayout('push', hand.bet);
         soundManager.playChip();
         roundMessages.push(`Hand ${index + 1}: Push.`);
+      }
+
+      // Flush Fortune Buff
+      if ((result === 'win' || result === 'blackjack') && inventory.some(i => i.id === 'flush_fortune')) {
+        const firstSuit = hand.cards[0].suit;
+        const isFlush = hand.cards.every(c => c.suit === firstSuit);
+        if (isFlush) {
+          // 3x Payout (3:1 odds) -> Return 4x bet (original bet + 3x winnings)
+          // Standard win is 2x bet (original bet + 1x winnings)
+          // So we add 2x bet to the payout
+          payout += (hand.bet * 2);
+          roundMessages.push(`Hand ${index + 1}: Flush Fortune! (3x Payout)`);
+        }
       }
 
       // Apply Buffs
@@ -835,7 +895,10 @@ function Game() {
                           />
                         </div>
                       ) : (
-                        <Card card={card} />
+                        <Card
+                          card={card}
+                          shiny={true}
+                        />
                       )}
                     </div>
                   ))}
@@ -876,7 +939,11 @@ function Game() {
                         </div>
                         <div className="cards">
                           {hand.cards.map((card, i) => (
-                            <Card key={i} card={card} />
+                            <Card
+                              key={i}
+                              card={card}
+                              shiny={true}
+                            />
                           ))}
                         </div>
                       </div>
@@ -953,3 +1020,33 @@ function App() {
 }
 
 export default App;
+
+function evaluatePokerHand(cards) {
+  const ranks = cards.map(c => {
+    if (c.rank === 'A') return 14;
+    if (c.rank === 'K') return 13;
+    if (c.rank === 'Q') return 12;
+    if (c.rank === 'J') return 11;
+    return parseInt(c.rank);
+  }).sort((a, b) => a - b);
+
+  const suits = cards.map(c => c.suit);
+  const isFlush = suits.every(s => s === suits[0]);
+
+  // Check Straight
+  let isStraight = (ranks[2] - ranks[1] === 1) && (ranks[1] - ranks[0] === 1);
+  // Special case: A-2-3 (14, 2, 3) -> sorted: 2, 3, 14
+  if (!isStraight && ranks[0] === 2 && ranks[1] === 3 && ranks[2] === 14) {
+    isStraight = true;
+  }
+
+  // Check Three of a Kind
+  const isTrips = ranks[0] === ranks[1] && ranks[1] === ranks[2];
+
+  if (isFlush && isStraight) return { name: 'Straight Flush', multiplier: 50 };
+  if (isTrips) return { name: 'Three of a Kind', multiplier: 30 };
+  if (isStraight) return { name: 'Straight', multiplier: 10 };
+  if (isFlush) return { name: 'Flush', multiplier: 5 };
+
+  return null;
+}

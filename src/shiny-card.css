@@ -1,0 +1,88 @@
+/* 
+  Adapted from pokemon-cards-css 
+  https://github.com/simeydotme/pokemon-cards-css
+*/
+
+:root {
+    --card-aspect: 0.718;
+    --card-radius: 4.55% / 3.5%;
+    --card-edge: #f4f6f8;
+    --card-back: #252525;
+    --card-glow: #ff00ff;
+    --sunpillar-1: hsl(2, 100%, 73%);
+    --sunpillar-2: hsl(53, 100%, 69%);
+    --sunpillar-3: hsl(93, 100%, 69%);
+    --sunpillar-4: hsl(176, 100%, 76%);
+    --sunpillar-5: hsl(228, 100%, 74%);
+    --sunpillar-6: hsl(283, 100%, 73%);
+}
+
+.shiny-card {
+    position: relative;
+    overflow: hidden;
+    will-change: transform, visibility;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transform: translate3d(0, 0, 0);
+    touch-action: none;
+}
+
+.shiny-card:hover {
+    box-shadow:
+        -20px -20px 30px -25px var(--card-glow),
+        20px 20px 30px -25px var(--card-glow),
+        -7px -7px 10px -5px var(--card-glow),
+        7px 7px 10px -5px var(--card-glow),
+        0 0 13px 4px rgba(255, 255, 255, 0.3),
+        0 55px 35px -20px rgba(0, 0, 0, 0.5);
+}
+
+.shiny-card__glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateZ(1px);
+    background: radial-gradient(farthest-corner circle at var(--pointer-x) var(--pointer-y),
+            hsla(0, 0%, 100%, 0.8) 10%,
+            hsla(0, 0%, 100%, 0.65) 20%,
+            hsla(0, 0%, 0%, 0.5) 90%);
+    opacity: var(--card-opacity);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.shiny-card__shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateZ(1px);
+    background:
+        linear-gradient(115deg,
+            transparent 0%,
+            var(--sunpillar-1) 25%,
+            var(--sunpillar-2) 47%,
+            var(--sunpillar-3) 53%,
+            var(--sunpillar-4) 75%,
+            var(--sunpillar-5) 90%,
+            var(--sunpillar-6) 100%);
+    background-position: var(--background-x) var(--background-y);
+    background-size: 300% 300%;
+    background-blend-mode: overlay;
+    opacity: var(--card-opacity);
+    mix-blend-mode: color-dodge;
+    filter: brightness(0.8) contrast(1.5);
+    pointer-events: none;
+}
+
+.shiny-card__content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    border-radius: var(--card-radius);
+    background-size: cover;
+    background-position: center;
+}
