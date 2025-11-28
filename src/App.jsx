@@ -48,6 +48,21 @@ function Game() {
     refreshShopItems();
   }, []);
 
+  // Layout Debugger State
+  const [showDebugger, setShowDebugger] = useState(true); // Show for adjustments
+  const [tableOffsetY, setTableOffsetY] = useState(-1.5);
+  const [tableOffsetX, setTableOffsetX] = useState(0);
+  const [dealerCardsOffsetY, setDealerCardsOffsetY] = useState(0);
+  const [messageAreaOffsetY, setMessageAreaOffsetY] = useState(-1.5);
+  const [playerCardsOffsetY, setPlayerCardsOffsetY] = useState(3);
+  const [playerCardsOffsetX, setPlayerCardsOffsetX] = useState(0);
+  const [gameplayButtonsOffsetY, setGameplayButtonsOffsetY] = useState(3.5);
+  const [gameplayButtonsOffsetX, setGameplayButtonsOffsetX] = useState(0);
+  const [bettingScreenOffsetY, setBettingScreenOffsetY] = useState(4);
+  const [bettingScreenOffsetX, setBettingScreenOffsetX] = useState(0);
+
+
+
   const refreshShopItems = () => {
     const shuffled = [...BUFFS].sort(() => 0.5 - Math.random());
     setShopItems(shuffled.slice(0, 3));
@@ -529,6 +544,200 @@ function Game() {
 
   return (
     <>
+      {/* Layout Debugger */}
+      {showDebugger && (
+        <div style={{
+          position: 'fixed',
+          top: '10px',
+          right: '10px',
+          background: 'rgba(0, 0, 0, 0.9)',
+          padding: '15px',
+          borderRadius: '8px',
+          zIndex: 10000,
+          color: '#fff',
+          fontFamily: 'monospace',
+          fontSize: '12px',
+          border: '2px solid #00ffff',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          minWidth: '250px'
+        }}>
+          <h3 style={{ margin: '0 0 15px 0', color: '#00ffff', textAlign: 'center' }}>Layout Debugger</h3>
+
+          <div style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #444' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#ff00ff' }}>Entire Table</h4>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Y Offset: {tableOffsetY}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={tableOffsetY}
+              onChange={(e) => setTableOffsetY(parseFloat(e.target.value))}
+              style={{ width: '100%', marginBottom: '8px' }}
+            />
+            <label style={{ display: 'block', marginBottom: '5px' }}>X Offset: {tableOffsetX}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={tableOffsetX}
+              onChange={(e) => setTableOffsetX(parseFloat(e.target.value))}
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #444' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#00ff00' }}>Dealer Cards</h4>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Y Offset: {dealerCardsOffsetY}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={dealerCardsOffsetY}
+              onChange={(e) => setDealerCardsOffsetY(parseFloat(e.target.value))}
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #444' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#00ff00' }}>Message Area</h4>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Y Offset: {messageAreaOffsetY}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={messageAreaOffsetY}
+              onChange={(e) => setMessageAreaOffsetY(parseFloat(e.target.value))}
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #444' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#ffff00' }}>Player Cards</h4>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Y Offset: {playerCardsOffsetY}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={playerCardsOffsetY}
+              onChange={(e) => setPlayerCardsOffsetY(parseFloat(e.target.value))}
+              style={{ width: '100%', marginBottom: '8px' }}
+            />
+            <label style={{ display: 'block', marginBottom: '5px' }}>X Offset: {playerCardsOffsetX}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={playerCardsOffsetX}
+              onChange={(e) => setPlayerCardsOffsetX(parseFloat(e.target.value))}
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #444' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#ffff00' }}>Gameplay Buttons</h4>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Y Offset: {gameplayButtonsOffsetY}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={gameplayButtonsOffsetY}
+              onChange={(e) => setGameplayButtonsOffsetY(parseFloat(e.target.value))}
+              style={{ width: '100%', marginBottom: '8px' }}
+            />
+            <label style={{ display: 'block', marginBottom: '5px' }}>X Offset: {gameplayButtonsOffsetX}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={gameplayButtonsOffsetX}
+              onChange={(e) => setGameplayButtonsOffsetX(parseFloat(e.target.value))}
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '15px', paddingBottom: '10px', borderBottom: '1px solid #444' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#ffff00' }}>Betting Screen</h4>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Y Offset: {bettingScreenOffsetY}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={bettingScreenOffsetY}
+              onChange={(e) => setBettingScreenOffsetY(parseFloat(e.target.value))}
+              style={{ width: '100%', marginBottom: '8px' }}
+            />
+            <label style={{ display: 'block', marginBottom: '5px' }}>X Offset: {bettingScreenOffsetX}rem</label>
+            <input
+              type="range"
+              min="-20"
+              max="20"
+              step="0.5"
+              value={bettingScreenOffsetX}
+              onChange={(e) => setBettingScreenOffsetX(parseFloat(e.target.value))}
+              style={{ width: '100%' }}
+            />
+          </div>
+
+          <button onClick={() => {
+            console.log('Layout Values:', {
+              tableOffsetY,
+              tableOffsetX,
+              dealerCardsOffsetY,
+              messageAreaOffsetY,
+              playerCardsOffsetY,
+              playerCardsOffsetX,
+              gameplayButtonsOffsetY,
+              gameplayButtonsOffsetX,
+              bettingScreenOffsetY,
+              bettingScreenOffsetX
+            });
+            alert('Values logged to console!');
+          }} style={{
+            width: '100%',
+            padding: '8px',
+            background: '#00ffff',
+            color: '#000',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontFamily: 'monospace',
+            fontWeight: 'bold'
+          }}>
+            Log Values
+          </button>
+        </div>
+      )}
+
+      <button
+        onClick={() => setShowDebugger(!showDebugger)}
+        style={{
+          position: 'fixed',
+          top: '10px',
+          left: '10px',
+          zIndex: 10000,
+          padding: '8px 12px',
+          background: '#333',
+          color: '#fff',
+          border: '2px solid #00ffff',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontFamily: 'monospace',
+          fontSize: '11px'
+        }}
+      >
+        {showDebugger ? 'Hide Debugger' : 'Show Debugger'}
+      </button>
+
       {/* Left Screen: Shop */}
       {leftNode && createPortal(
         <Shop
@@ -545,7 +754,11 @@ function Game() {
 
       {/* Center Screen: Game Board */}
       {centerNode && createPortal(
-        <div className="app" style={{ background: 'transparent', position: 'relative' }}>
+        <div className="app" style={{
+          background: 'transparent',
+          position: 'relative',
+          transform: `translate(${tableOffsetX}rem, ${tableOffsetY}rem)`
+        }}>
           {/* Menu Overlay */}
           {menuOpen && (
             <StartMenu
@@ -601,7 +814,9 @@ function Game() {
             </div>
           ) : (
             <div className="game-board" style={{ height: '100%', border: 'none', boxShadow: 'none' }}>
-              <div className="hand-area">
+              <div className="hand-area" style={{
+                transform: `translateY(${dealerCardsOffsetY}rem)`
+              }}>
                 <h2>Dealer ({gameState === 'playing' ? '?' : calculateHandValue(dealerHand)}) <span style={{ fontSize: '0.8rem', color: '#aaa' }}>[{dealerTrait}]</span></h2>
                 <div className="cards">
                   {dealerHand.map((card, i) => (
@@ -627,12 +842,17 @@ function Game() {
                 </div>
               </div>
 
-              <div className="message-area">
+              <div className="message-area" style={{
+                transform: `translateY(${messageAreaOffsetY}rem)`
+              }}>
                 <h3>{message}</h3>
               </div>
 
               <div className="game-board" style={{ height: '100%', border: 'none', boxShadow: 'none' }}>
-                <div className="hand-area" style={{ position: 'relative' }}>
+                <div className="hand-area" style={{
+                  position: 'relative',
+                  transform: `translate(${playerCardsOffsetX}rem, ${playerCardsOffsetY - 1}rem)`
+                }}>
 
                   <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
                     {playerHands.map((hand, index) => (
@@ -650,17 +870,14 @@ function Game() {
                         <h2 style={{ fontSize: '1rem', marginBottom: '5px' }}>
                           Hand {index + 1} ({calculateHandValue(hand.cards)})
                         </h2>
+                        {/* Bet Stack for this hand - moved above cards */}
+                        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+                          <ChipStack amount={hand.bet} isBet={true} />
+                        </div>
                         <div className="cards">
                           {hand.cards.map((card, i) => (
                             <Card key={i} card={card} />
                           ))}
-                        </div>
-                        <div style={{ marginTop: '5px', fontSize: '0.8rem', color: '#aaa' }}>
-                          Bet: ${hand.bet}
-                        </div>
-                        {/* Bet Stack for this hand */}
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
-                          <ChipStack amount={hand.bet} isBet={true} />
                         </div>
                       </div>
                     ))}
@@ -691,6 +908,10 @@ function Game() {
                   currentBet={currentBet}
                   onChangeBet={setCurrentBet}
                   chips={chips}
+                  gameplayButtonsOffsetX={gameplayButtonsOffsetX}
+                  gameplayButtonsOffsetY={gameplayButtonsOffsetY}
+                  bettingScreenOffsetX={bettingScreenOffsetX}
+                  bettingScreenOffsetY={bettingScreenOffsetY}
                 />
               </div>
             </div>

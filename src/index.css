@@ -922,14 +922,17 @@ button:disabled {
 
 .chip-value-label {
   position: absolute;
-  bottom: -20px;
-  width: 100%;
-  text-align: center;
+  left: 45px;
+  /* Position to the right of the chips */
+  top: 50%;
+  transform: translateY(-50%);
+  /* Center vertically */
+  white-space: nowrap;
   font-size: 0.8rem;
   color: #fff;
   text-shadow: 1px 1px 0 #000;
   font-family: 'Press Start 2P', cursive;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
-  padding: 2px;
+  padding: 2px 6px;
 }

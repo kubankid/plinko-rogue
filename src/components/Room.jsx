@@ -293,10 +293,10 @@ function Scene({
             borderRadius: '4px',
             border: 'none',
             boxShadow: 'none',
-            overflow: 'hidden'
+            overflow: 'visible'
           }}
         >
-          <div ref={setCenterNode} style={{ width: '100%', height: '100%', overflowY: 'auto' }} />
+          <div ref={setCenterNode} style={{ width: '100%', height: '100%', overflow: 'visible' }} />
         </Html>
       </group>
 
