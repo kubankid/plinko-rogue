@@ -5,17 +5,7 @@ const BuffDisplay = ({ inventory, onSell }) => {
 
     if (inventory.length === 0) return null;
 
-    const getIcon = (id) => {
-        switch (id) {
-            case 'loaded_dice': return '🎲';
-            case 'safety_net': return '🛡️';
-            case 'high_roller': return '💎';
-            case 'second_chance': return '🤞';
-            case 'charity': return '🕊️';
-            case 'ace_in_hole': return '🅰️';
-            default: return '🔮';
-        }
-    };
+
 
     const handleSell = () => {
         if (selectedBuff && onSell) {
@@ -26,16 +16,32 @@ const BuffDisplay = ({ inventory, onSell }) => {
 
     return (
         <>
-            <div className="buff-display">
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: '10px',
+                padding: '10px'
+            }}>
                 {inventory.map((item, index) => (
                     <div
                         key={index}
-                        className="buff-icon"
                         title={item.name}
                         onClick={() => setSelectedBuff(item)}
-                        style={{ cursor: 'pointer' }}
+                        style={{
+                            cursor: 'pointer',
+                            fontSize: '2.5rem',
+                            textAlign: 'center',
+                            border: '2px solid #444',
+                            borderRadius: '8px',
+                            padding: '10px',
+                            background: 'rgba(0,0,0,0.3)',
+                            aspectRatio: '1/1',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
                     >
-                        {getIcon(item.id)}
+                        {item.icon || '❓'}
                     </div>
                 ))}
             </div>
@@ -63,9 +69,7 @@ const BuffDisplay = ({ inventory, onSell }) => {
                         color: '#fff',
                         boxShadow: '0 0 20px rgba(0, 255, 255, 0.3)'
                     }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '10px' }}>
-                            {getIcon(selectedBuff.id)}
-                        </div>
+                        {selectedBuff.icon || '❓'}
                         <h3 style={{ color: '#ff00ff', marginBottom: '10px' }}>{selectedBuff.name}</h3>
                         <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '1.2rem' }}>
                             {selectedBuff.description}

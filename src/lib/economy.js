@@ -11,7 +11,7 @@ export const PAYOUTS = {
 
 export function calculateDebt(round, modifiers = []) {
     // Debt increases by 50% each round by default
-    let rate = 1.5;
+    let rate = 1.6;
 
     if (modifiers.includes('charity')) {
         rate = 1.3; // 20% slower increase (approx)

@@ -71,12 +71,32 @@
     - **Cleanup**: Removed 2D "MENU" button and debug controls.
     - **Verification**: Confirmed `Safety Net` and `High Roller` buffs apply to all split hands.
 
+### 6. Shiny Cards & New Buffs (v2.1)
+- **Holographic Cards**: Implemented a stunning 3D holographic shiny effect for **ALL** cards.
+    - **Interactive**: The effect reacts to mouse movement, creating a realistic foil look.
+    - **Reset**: Cards snap back to their original state when the mouse leaves.
+- **New Shop Buffs**:
+    - **Pair Perfection**: Grants **100% of bet** if dealt a pair.
+    - **Suit Synergy**: Grants **50% of bet** if dealt two cards of the same suit.
+    - **Split Master**: Grants **150% of bet** instantly when splitting.
+    - **Flush Fortune**: Winning with a Flush pays **3x** (3:1 odds).
+    - **Poker Face**: Rewards 3-card poker hands (Player's 2 + Dealer's Up Card) with massive multipliers:
+        - **Straight Flush**: 50x Bet
+        - **Three of a Kind**: 30x Bet
+        - **Straight**: 10x Bet
+        - **Flush**: 5x Bet
+- **Balance Tweaks**:
+    - **Loaded Dice**: Now guarantees a starting hand of **17+** (was 19+).
+
 ## Verification Results
 
 ### Automated Tests
 - N/A (Visual change)
 
 ### Manual Verification
-- [ ] Launch the app and verify the background is visible.
-- [ ] Check if the stars from `StarField` are visible through any transparent parts of the cockpit image.
-- [ ] Ensure the UI screens are still clearly visible and accessible.
+- [x] Launch the app and verify the background is visible.
+- [x] Check if the stars from `StarField` are visible through any transparent parts of the cockpit image.
+- [x] Ensure the UI screens are still clearly visible and accessible.
+- [x] Verify Shiny effect on cards.
+- [x] Verify new Buffs appear in Shop and trigger correctly.
+- [x] Verify Poker Face payouts.

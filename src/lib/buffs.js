@@ -1,85 +1,130 @@
 export const BUFFS = [
     {
-        id: 'loaded_dice',
-        name: 'Loaded Dice',
-        description: 'Start every hand with at least 17.',
+        id: 'bouncy_balls',
+        name: 'Bouncy Balls',
+        description: 'Balls bounce more, increasing chaos.',
         cost: 50,
-        type: 'gameplay'
+        rarity: 'common',
+        icon: '🎾'
+    },
+    {
+        id: 'heavy_metal',
+        name: 'Heavy Metal',
+        description: 'Balls fall faster and are less affected by pegs.',
+        cost: 75,
+        rarity: 'common',
+        icon: '🤘'
+    },
+    {
+        id: 'multi_ball',
+        name: 'Multi-Ball',
+        description: '10% chance to spawn an extra ball for free.',
+        cost: 150,
+        rarity: 'rare',
+        icon: '🎱'
+    },
+    {
+        id: 'magnet',
+        name: 'Magnet',
+        description: 'Balls are slightly pulled towards the center.',
+        cost: 200,
+        rarity: 'rare',
+        icon: '🧲'
     },
     {
         id: 'safety_net',
         name: 'Safety Net',
-        description: 'Get 5 chips back on a loss.',
-        cost: 40,
-        type: 'economy'
-    },
-    {
-        id: 'high_roller',
-        name: 'High Roller',
-        description: 'Blackjack pays double.',
-        cost: 75,
-        type: 'economy'
-    },
-    {
-        id: 'second_chance',
-        name: 'Second Chance',
-        description: 'Once per round, ignore a bust.',
+        description: 'Increases the value of the lowest multipliers (0.2x -> 0.5x).',
         cost: 100,
-        type: 'gameplay'
+        rarity: 'uncommon',
+        icon: '🕸️'
     },
     {
-        id: 'charity',
-        name: 'Charity',
-        description: 'Debt increases 20% slower.',
-        cost: 60,
-        type: 'economy'
+        id: 'mitosis',
+        name: 'Mitosis',
+        description: '5% chance for balls to split on bounce.',
+        cost: 250,
+        rarity: 'rare',
+        icon: '🦠'
     },
     {
-        id: 'ace_in_hole',
-        name: 'Ace in the Hole',
-        description: 'Start with an Ace if you have no Aces.',
+        id: 'expansion',
+        name: 'Expansion',
+        description: 'Adds an extra slot to the bottom of the board.',
+        cost: 500,
+        rarity: 'legendary',
+        icon: '🏗️'
+    },
+    {
+        id: 'wall_bounce',
+        name: 'Wall Bounce',
+        description: 'Hitting a wall increases the ball\'s value multiplier by +0.5x.',
         cost: 120,
-        type: 'gameplay'
+        rarity: 'uncommon',
+        icon: '🧱'
     },
     {
-        id: 'pair_perfection',
-        name: 'Pair Perfection',
-        description: 'Being dealt a pair grants 100% of bet.',
-        cost: 60,
-        type: 'economy'
+        id: 'golden_ball',
+        name: 'Golden Ball',
+        description: 'Every 10th ball is worth 5x value.',
+        cost: 300,
+        rarity: 'legendary',
+        icon: '🌟'
     },
     {
-        id: 'split_master',
-        name: 'Split Master',
-        description: 'Splitting a hand grants 150% of bet.',
-        cost: 70,
-        type: 'economy'
+        id: 'gravity_well',
+        name: 'Gravity Well',
+        description: 'Slightly increases gravity, making drops faster.',
+        cost: 40,
+        rarity: 'common',
+        icon: '🌌'
     },
     {
-        id: 'suit_synergy',
-        name: 'Suit Synergy',
-        description: 'First two cards of same suit grants 50% of bet.',
-        cost: 50,
-        type: 'economy'
-    },
-    {
-        id: 'poker_face',
-        name: 'Poker Face',
-        description: 'Form poker hands with dealer\'s up card for huge payouts!',
-        cost: 200,
-        type: 'economy'
-    },
-    {
-        id: 'flush_fortune',
-        name: 'Flush Fortune',
-        description: 'Winning with a flush (all cards same suit) pays 3x.',
+        id: 'ghost_protocol',
+        name: 'Ghost Protocol',
+        description: '10% chance for balls to pass through pegs.',
         cost: 150,
-        type: 'economy'
+        rarity: 'rare',
+        icon: '👻'
+    },
+    {
+        id: 'compound_interest',
+        name: 'Compound Interest',
+        description: 'Gain +5% of your current chips at the end of every round.',
+        cost: 300,
+        rarity: 'rare',
+        icon: '📈'
+    },
+    {
+        id: 'combo_master',
+        name: 'Combo Master',
+        description: 'Hitting the same slot consecutively increases its multiplier by +0.5x.',
+        cost: 200,
+        rarity: 'rare',
+        icon: '🔥'
+    },
+    {
+        id: 'sniper_sight',
+        name: 'Sniper Sight',
+        description: 'Shows a trajectory line predicting the ball\'s path.',
+        cost: 100,
+        rarity: 'common',
+        icon: '🎯'
+    },
+    {
+        id: 'peg_smasher',
+        name: 'Peg Smasher',
+        description: 'Every 20th ball destroys the first 3 pegs it hits.',
+        cost: 500,
+        rarity: 'legendary',
+        icon: '🔨'
+    },
+    {
+        id: 'second_wind',
+        name: 'Second Wind',
+        description: '25% chance for a bad drop (<1x) to be blown back up.',
+        cost: 150,
+        rarity: 'uncommon',
+        icon: '🍃'
     }
 ];
-
-export function applyBuffs(gameState, buffs) {
-    // Logic to modify game state based on buffs
-    // This will be expanded as we integrate into App.jsx
-    return gameState;
-}
